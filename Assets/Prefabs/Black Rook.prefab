@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4695304297149986}
   - component: {fileID: 33186257393094246}
   - component: {fileID: 23511508203432434}
+  - component: {fileID: 114846184178513626}
   m_Layer: 0
   m_Name: Black Rook
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1076795238514260}
   m_Mesh: {fileID: 4300030, guid: 81482e440da955b47a88d015860b5d82, type: 3}
+--- !u!114 &114846184178513626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1076795238514260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b604bfe1262dc74da67d5610d8ca2e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWhite: 0

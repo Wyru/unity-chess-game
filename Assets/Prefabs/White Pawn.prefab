@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4053669715109158}
   - component: {fileID: 33667296517214010}
   - component: {fileID: 23786279861118436}
+  - component: {fileID: 114152667586485564}
   m_Layer: 0
   m_Name: White Pawn
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1638077073223858}
   m_Mesh: {fileID: 4300066, guid: 81482e440da955b47a88d015860b5d82, type: 3}
+--- !u!114 &114152667586485564
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1638077073223858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b92606d3ef6b4488c6fc73374789a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWhite: 1

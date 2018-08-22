@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4099400785849824}
   - component: {fileID: 33886326494111062}
   - component: {fileID: 23553430880664192}
+  - component: {fileID: 114930641098630972}
   m_Layer: 0
   m_Name: Black King
   m_TagString: Untagged
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1936894793324736}
   m_Mesh: {fileID: 4300004, guid: 81482e440da955b47a88d015860b5d82, type: 3}
+--- !u!114 &114930641098630972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1936894793324736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed28163d8316cda438513a73c96f815a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWhite: 0

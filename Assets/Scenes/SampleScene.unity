@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b198158ba330b4e85c79c2501a6c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chessPieces:
+  chessman:
   - {fileID: 1112884193533012, guid: 8568fe42e25142e498b688991e8cd42b, type: 2}
   - {fileID: 1869346844952224, guid: 6942fd68f55573f47a2088d6a42f20e4, type: 2}
   - {fileID: 1070547520838514, guid: 174cb211315e5e54f9e3347a89f95d43, type: 2}
@@ -153,6 +153,7 @@ MonoBehaviour:
   - {fileID: 1051470504343266, guid: 3cdc077ed3484454a8b9093b2968843a, type: 2}
   - {fileID: 1076795238514260, guid: a1713a1f6dc55bb45a9843e5afa0a04f, type: 2}
   - {fileID: 1129812736246710, guid: 039fed1bd698b264d9e4588ca3608b1b, type: 2}
+  isWhiteTurn: 1
 --- !u!4 &116505659
 Transform:
   m_ObjectHideFlags: 0
