@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 503d95744888da4489ffd1460ecc714d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - hightlightPrefab: {fileID: 1105640309504096, guid: 3547b0e134a4bb34c9abe9d8493de02f,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

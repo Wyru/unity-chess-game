@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 116505659}
   - component: {fileID: 116505658}
+  - component: {fileID: 116505660}
   m_Layer: 0
   m_Name: ChessBoardController
   m_TagString: Untagged
@@ -167,6 +168,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &116505660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 116505657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 503d95744888da4489ffd1460ecc714d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hightlightPrefab: {fileID: 1105640309504096, guid: 3547b0e134a4bb34c9abe9d8493de02f,
+    type: 2}
+  hightlights: []
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +289,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 29.27374
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -298,13 +313,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 282840810}
-  m_LocalRotation: {x: 0.39559653, y: -0, z: -0, w: 0.91842437}
-  m_LocalPosition: {x: 3.87, y: 6.83, z: -2.37}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.3395586, y: -0, z: -0, w: 0.94058496}
+  m_LocalPosition: {x: 3.8, y: 10.6, z: -9.2}
+  m_LocalScale: {x: 1.1168004, y: 1.03, z: 0.4284064}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 46.606003, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 39.7, y: 0, z: 0}
 --- !u!4 &889998465 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4624764595468818, guid: 3f2feed556635ac4f867c81fa34ff2f8,
@@ -332,7 +347,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1453091978}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3.95, y: 0, z: 4.03}
+  m_LocalPosition: {x: 3.99, y: 0, z: 4.03}
   m_LocalScale: {x: 0.16500008, y: 0.16859372, z: 0.125}
   m_Children:
   - {fileID: 889998465}

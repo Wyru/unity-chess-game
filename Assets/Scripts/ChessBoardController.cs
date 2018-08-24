@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ChessBoardController : MonoBehaviour {
 	
+	public static ChessBoardController Instace{get;set;}
+	private bool[,] allowedMoves{set;get;}
+
 	public Chessman[,] Chessmans{get;set;} 
 	private Chessman selectedChessman;
 
@@ -23,6 +26,7 @@ public class ChessBoardController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		Instace = this;
 		SpawAllPieces();
 	}
 	
@@ -106,19 +110,23 @@ public class ChessBoardController : MonoBehaviour {
 		if(Chessmans[x,y].isWhite != isWhiteTurn)
 			return;
 
+		allowedMoves = Chessmans[x,y].PossibleMove();
 		selectedChessman = Chessmans[x,y];
+		BoardHighlights.Instance.HighlightAllowedMoves(allowedMoves);
+		Debug.Log(selectedChessman);
 	}
 
 	private void MoveChessman(int x, int y)
 	{
-		if(selectedChessman.PossibleMove(x,y))
+		if(allowedMoves[x,y])
 		{
 			Chessmans[x,y] = null;
 			selectedChessman.transform.position = GetTileCenter(x,y);
 			Chessmans[selectionX, selectionY] = selectedChessman;
+			selectedChessman.setPostion(x,y);
 			isWhiteTurn= !isWhiteTurn;
 		}
-
+		BoardHighlights.Instance.HideHighlights();
 		selectedChessman = null;
 	}
 
@@ -127,6 +135,7 @@ public class ChessBoardController : MonoBehaviour {
 	{
 		GameObject go = Instantiate(chessman[index],GetTileCenter(x,y),orientation) as GameObject;
 		Chessmans[x,y] = go.GetComponent<Chessman>();
+		Chessmans[x,y].setPostion(x,y);
 		go.transform.SetParent(this.transform);
 		activeChessman.Add(go);
 	}
