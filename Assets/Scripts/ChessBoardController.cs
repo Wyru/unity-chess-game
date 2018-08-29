@@ -176,13 +176,13 @@ public class ChessBoardController : MonoBehaviour {
 		//Queen
 		SpawnPiece(1, 4,0);
 		//bishops
-		SpawnPiece(2, 2,0);
+		SpawnPiece(2, 3,3);
 		SpawnPiece(2, 5,0);
 		//kights
 		SpawnPiece(3, 1,0);
 		SpawnPiece(3, 6,0);
 		//Rook
-		SpawnPiece(4, 3,3);
+		SpawnPiece(4, 0,0);
 		SpawnPiece(4, 7,0);
 		for (int i = 0; i < 8; i++)
 			SpawnPiece(5, i,1);
