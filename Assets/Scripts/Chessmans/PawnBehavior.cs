@@ -52,7 +52,7 @@ public class PawnBehavior : Chessman {
             if(currentX != 0 && currentY != 0)
             {
                 aux = ChessBoardController.Instace.Chessmans[currentX-1, currentY-1];
-                if(aux != null && !aux.isWhite)
+                if(aux != null && isWhite != aux.isWhite)
                     r[currentX-1, currentY-1] =  true;
             }
 
@@ -60,7 +60,7 @@ public class PawnBehavior : Chessman {
             if(currentX != 7 && currentY != 0)
             {
                 aux = ChessBoardController.Instace.Chessmans[currentX+1, currentY-1];
-                if(aux != null && !aux.isWhite)
+                if(aux != null && isWhite != aux.isWhite)
                     r[currentX+1, currentY-1] =  true;
             }
 

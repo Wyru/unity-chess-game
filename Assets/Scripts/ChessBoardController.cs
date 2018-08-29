@@ -35,8 +35,11 @@ public class ChessBoardController : MonoBehaviour {
 	{
 		DrawBoard();
 		UpdateSelection();
-
-		if(Input.GetMouseButtonDown(0))
+		#if UNITY_EDITOR
+			if(Input.GetMouseButtonDown(0))
+		#else
+			if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+		#endif
 		{
 			if(selectedChessman == null)
 			{
@@ -90,10 +93,18 @@ public class ChessBoardController : MonoBehaviour {
 		
 		RaycastHit hit;
 
-		if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 25.0f, LayerMask.GetMask("chessboard"))){
+		
+		#if UNITY_EDITOR
+			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000.0f, LayerMask.GetMask("chessboard")))
+		#else
+			if(!(Input.touchCount > 0))
+				return;
+
+			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.GetTouch(0).position), out hit, 10000.0f, LayerMask.GetMask("chessboard")))
+		#endif
+		{
 			selectionX = (int) hit.point.x;
 			selectionY = (int) hit.point.z;
-
 		}
 		else{
 			selectionX = -1;
@@ -113,21 +124,35 @@ public class ChessBoardController : MonoBehaviour {
 		allowedMoves = Chessmans[x,y].PossibleMove();
 		selectedChessman = Chessmans[x,y];
 		BoardHighlights.Instance.HighlightAllowedMoves(allowedMoves);
-		Debug.Log(selectedChessman);
 	}
 
 	private void MoveChessman(int x, int y)
 	{
 		if(allowedMoves[x,y])
 		{
-			Chessmans[x,y] = null;
+			Chessman c = Chessmans[x,y];
+			if(c!= null && c.isWhite != isWhiteTurn)
+			{
+				//capture the piece
+
+				if(c.GetType() == typeof(KingBehavior))
+				{
+					//End the game end
+					return;
+				}
+
+				activeChessman.Remove(c.gameObject);
+				Destroy(c.gameObject);
+			}
+			Chessmans[selectedChessman.currentX,selectedChessman.currentY] = null;
 			selectedChessman.transform.position = GetTileCenter(x,y);
-			Chessmans[selectionX, selectionY] = selectedChessman;
+			Chessmans[x, y] = selectedChessman;
 			selectedChessman.setPostion(x,y);
 			isWhiteTurn= !isWhiteTurn;
 		}
 		BoardHighlights.Instance.HideHighlights();
 		selectedChessman = null;
+		// PrintChessmans();
 	}
 
 
@@ -157,7 +182,7 @@ public class ChessBoardController : MonoBehaviour {
 		SpawnPiece(3, 1,0);
 		SpawnPiece(3, 6,0);
 		//Rook
-		SpawnPiece(4, 0,0);
+		SpawnPiece(4, 3,3);
 		SpawnPiece(4, 7,0);
 		for (int i = 0; i < 8; i++)
 			SpawnPiece(5, i,1);
@@ -187,5 +212,19 @@ public class ChessBoardController : MonoBehaviour {
 		origin.z += (TILE_SIZE*y)+TILE_OFFSET;
 
 		return origin;
+	}
+
+	private void PrintChessmans()
+	{
+		string text = "";
+		for (int i = 0; i < 8; i++)
+		{
+			for (int j = 0; j < 8; j++)
+			{
+				text+=(Chessmans[j, i]!=null)+" | ";
+			}
+			text+='\n';
+		}
+		Debug.Log(text);
 	}
 }
