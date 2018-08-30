@@ -13,7 +13,7 @@ public class RookBehavior : Chessman {
         //right
         while (true)
         {
-            i++;
+            i= i + 1;
             if(i > 7)
                 break;
             c = ChessBoardController.Instace.Chessmans[i,currentY];
