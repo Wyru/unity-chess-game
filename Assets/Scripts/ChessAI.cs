@@ -5,8 +5,9 @@ using UnityEngine;
 public class ChessAI  {
 
 
-    public int max_deep = 3;
+    public int max_deep = 2;
 
+    int qtd_movimentos = 0;
 
     private enum ChessmansEnum
     {
@@ -22,6 +23,7 @@ public class ChessAI  {
     public int[] StartIA()
     {
         int [,] board = GetCurrentBoard();
+        qtd_movimentos = 0;
         return ChooseMove(board);
     }
 
@@ -84,6 +86,7 @@ public class ChessAI  {
         //Para cada peça os possíveis movimentos
         for (int x = 0; x < 8; x++)
         {
+            qtd_movimentos++;
             for (int y = 0; y < 8; y++)
             {
                 //pega os possíveis movimentos
@@ -123,11 +126,11 @@ public class ChessAI  {
         else if(board[x,y] == (int)ChessmansEnum.wking || board[x,y] == (int)ChessmansEnum.bking)
             PawnMoves(board, x, y, moves);
         else if(board[x,y] == (int)ChessmansEnum.wqueen || board[x,y] == (int)ChessmansEnum.bqueen)
-            PawnMoves(board, x, y, moves);
+            KingMoves(board, x, y, moves);
         else if(board[x,y] == (int)ChessmansEnum.wbishop || board[x,y] == (int)ChessmansEnum.bbishop)
-            PawnMoves(board, x, y, moves);
+            BishopMoves(board, x, y, moves);
         else if(board[x,y] == (int)ChessmansEnum.wknight || board[x,y] == (int)ChessmansEnum.bknight)
-            PawnMoves(board, x, y, moves);
+            KnightMoves(board, x, y, moves);
         else if(board[x,y] == (int)ChessmansEnum.wrook || board[x,y] == (int)ChessmansEnum.brook)
             RookMoves(board, x, y, moves);
         else 
@@ -223,7 +226,7 @@ public class ChessAI  {
         }
     }
 
-    private List<int[]>RookMoves(int[,] board, int x, int y,  List<int[]> moves)
+    private void RookMoves(int[,] board, int x, int y,  List<int[]> moves)
     {
         //right
         int i =  x;
@@ -297,11 +300,170 @@ public class ChessAI  {
                 break;
             }
         }
-
-
-        return moves;
     }
 
+    public void KnightMoves(int[,] board, int x, int y,  List<int[]> moves)
+    {
+        //up lef
+        knightMoveAux(x, y, x-1, y+2, board, moves);
+        //up right
+        knightMoveAux(x, y, x+1, y+2, board, moves);
+
+        //left up
+        knightMoveAux(x, y, x-2, y+1, board, moves);
+        //left down
+        knightMoveAux(x, y, x-2, y-1, board, moves);
+
+        //right up
+        knightMoveAux(x, y, x+2, y+1, board, moves);
+        //right down
+        knightMoveAux(x, y, x+2, y-1, board, moves);
+
+        //down left
+        knightMoveAux(x, y, x-1, y-2, board, moves);
+        //down right
+        knightMoveAux(x, y, x+1, y-2, board, moves);
+    }
+
+    private void knightMoveAux(int x, int y, int x_move, int y_move, int [,] board, List<int[]> moves)
+    {
+        int c;
+        if(x_move >= 0 && x_move < 8 && y_move >= 0 && y_move < 8){
+            c = board[x_move,y_move];
+            if(c == -1)
+                moves.Add(new int[]{x, y, x_move, y_move, 0});
+            else if(board[x, y] < 6 && board[x_move,y_move] >= 6 || board[x, y] >= 6 && board[x_move, y_move] < 6)
+                moves.Add(new int[]{x, y, x_move, y_move, 0});
+        }
+    }
+
+    private void BishopMoves(int[,] board, int x, int y, List<int[]> moves)
+    {
+        int i, j, c;
+
+        //up left
+        for (i = x-1, j = y+1; i >= 0 && j < 8; i--, j++)
+        {
+            c = board[x,y];
+            if(c == -1)
+                moves.Add(new int[]{x, y, i, j, 0});
+            else
+            {
+                if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                    moves.Add(new int[]{x, y, i, j, 0});
+                break;
+            }
+            
+        } 
+
+
+        //up right
+        for (i = x+1, j = y+1; i < 8 && j < 8; i++, j++)
+        {
+            c = board[x,y];
+            if(c == -1)
+                moves.Add(new int[]{x, y, i, j, 0});
+            else
+            {
+                if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                    moves.Add(new int[]{x, y, i, j, 0});
+                break;
+            }
+        }
+
+        //down left
+        for (i = x-1, j = y-1; i >=0 && j >= 0; i--, j--)
+        {
+            c = board[x,y];
+            if(c == -1)
+                moves.Add(new int[]{x, y, i, j, 0});
+            else
+            {
+                if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                    moves.Add(new int[]{x, y, i, j, 0});
+                break;
+            }
+        }  
+
+        //down right
+        for (i = x+1, j = y-1; i < 8 && j >= 0; i++, j--)
+        {
+            c = board[x,y];
+            if(c == -1)
+                moves.Add(new int[]{x, y, i, j, 0});
+            else
+            {
+                if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                    moves.Add(new int[]{x, y, i, j, 0});
+                break;
+            }
+        }  
+
+    }
+
+    private void KingMoves(int [,] board, int x, int y,  List<int[]> moves)
+    {
+        int i, j, c;
+
+        // Top side
+        i = x - 1;
+        j = y + 1;
+        if (y != 7)
+        {
+            for(int k = 0; k < 3; k++)
+            {
+                if(i >= 0 || i < 8)
+                {
+                    c = board[i,j];
+                    if (c == -1)
+                        moves.Add(new int[]{x, y, i, j, 0});
+                        
+                    if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                        moves.Add(new int[]{x, y, i, j, 0});
+                }
+                i++;    
+            }
+        }
+
+        //down side
+        i = x - 1;
+        j = y - 1;
+        if (y != 0)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                if (i >= 0 || i < 8)
+                {
+                    c = board[i,j];
+                    if (c == -1)
+                        moves.Add(new int[]{x, y, i, j, 0});
+                    if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                        moves.Add(new int[]{x, y, i, j, 0});
+                }
+                i++;
+            }
+        }
+
+        //middle left
+        if (x != 0)
+        {
+            c = board[x-1,y];
+            if (c == -1)
+                moves.Add(new int[]{x, y, x-1, y, 0});
+            else if(board[x, y] < 6 && board[x-1,y] >= 6 || board[x, y] >= 6 && board[x-1, y] < 6)
+                moves.Add(new int[]{x, y, x-1, y, 0});
+        }
+        
+        //middle Right
+        if (x != 7)
+        {
+            c = board[x-1,y];
+            if (c == -1)
+                moves.Add(new int[]{x, y, x+1, y, 0});
+            else if(board[x, y] < 6 && board[x+1,y] >= 6 || board[x, y] >= 6 && board[x+1, y] < 6)
+                moves.Add(new int[]{x, y, x+1, y, 0});
+        }
+    }
 
     private int BoardToScore(int[,] board)
     {

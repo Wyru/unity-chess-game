@@ -201,34 +201,34 @@ public class ChessBoardController : MonoBehaviour {
 		Chessmans =  new Chessman[8,8];
 		//white pieces
 		
-		// //king
-		SpawnPiece(0, 3,0);
-		// //Queen
-		SpawnPiece(1, 4,0);
-		// //bishops
-		SpawnPiece(2, 2,0);
-		SpawnPiece(2, 5,0);
-		// //kights
+		// // //king
+		SpawnPiece(0, 4,0);
+		// // //Queen
+		SpawnPiece(1, 3,0);
+		// // //bishops
+		// SpawnPiece(2, 2,0);
+		// SpawnPiece(2, 5,0);
+		// // //kights
 		SpawnPiece(3, 1,0);
 		SpawnPiece(3, 6,0);
-		//Rook
+		// //Rook
 		SpawnPiece(4, 0,0);
 		SpawnPiece(4, 7,0);
 		for (int i = 0; i < 8; i++)
 			SpawnPiece(5, i,1);
-		
-		//Black
-		// //king
-		SpawnPiece(6, 4,7);
-		// //Queen
-		SpawnPiece(7, 3,7);
-		// //bishps
-		SpawnPiece(8, 2,7);
-		SpawnPiece(8, 5,7);
-		// //kights
+
+		// //Black
+		// // //king
+		SpawnPiece(6, 3,7);
+		// // //Queen
+		SpawnPiece(7, 4,7);
+		// // //bishops
+		// SpawnPiece(8, 2,7);
+		// SpawnPiece(8, 5,7);
+		// // //kights
 		SpawnPiece(9, 1,7);
 		SpawnPiece(9, 6,7);
-		//Rook
+		// //Rook
 		SpawnPiece(10, 0,7);
 		SpawnPiece(10, 7,7);
 		for (int i = 0; i < 8; i++)
