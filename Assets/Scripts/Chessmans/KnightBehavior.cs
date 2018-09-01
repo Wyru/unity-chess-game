@@ -34,7 +34,7 @@ public class KnightBehavior : Chessman {
     {
         Chessman c;
         if(x >= 0 && x < 8 && y >= 0 && y < 8){
-            c = ChessBoardController.Instace.Chessmans[x,y];
+            c = ChessBoardController.Instance.Chessmans[x,y];
             if(c == null)
                 r[x,y] = true;
             else if(isWhite != c.isWhite)

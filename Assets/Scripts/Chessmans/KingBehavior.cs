@@ -20,7 +20,7 @@ public class KingBehavior : Chessman
             {
                 if(i >= 0 || i < 8)
                 {
-                    c = ChessBoardController.Instace.Chessmans[i, j];
+                    c = ChessBoardController.Instance.Chessmans[i, j];
                     if (c == null)
                         r[i, j] = true;
                     else if (isWhite != c.isWhite)
@@ -39,7 +39,7 @@ public class KingBehavior : Chessman
             {
                 if (i >= 0 || i < 8)
                 {
-                    c = ChessBoardController.Instace.Chessmans[i, j];
+                    c = ChessBoardController.Instance.Chessmans[i, j];
                     if (c == null)
                         r[i, j] = true;
                     else if (isWhite != c.isWhite)
@@ -52,7 +52,7 @@ public class KingBehavior : Chessman
         //middle left
         if (currentX != 0)
         {
-            c = ChessBoardController.Instace.Chessmans[currentX - 1, currentY];
+            c = ChessBoardController.Instance.Chessmans[currentX - 1, currentY];
             if (c == null)
                 r[currentX - 1, currentY] = true;
             else if (isWhite != c.isWhite)
@@ -62,7 +62,7 @@ public class KingBehavior : Chessman
         //middle Right
         if (currentX != 7)
         {
-            c = ChessBoardController.Instace.Chessmans[currentX + 1, currentY];
+            c = ChessBoardController.Instance.Chessmans[currentX + 1, currentY];
             if (c == null)
                 r[currentX + 1, currentY] = true;
             else if (isWhite != c.isWhite)

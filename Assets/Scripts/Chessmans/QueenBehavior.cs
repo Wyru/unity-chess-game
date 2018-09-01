@@ -19,7 +19,7 @@ public class QueenBehavior : Chessman
             i++;
             if (i > 7)
                 break;
-            c = ChessBoardController.Instace.Chessmans[i, currentY];
+            c = ChessBoardController.Instance.Chessmans[i, currentY];
             if (c == null)
                 r[i, currentY] = true;
             else
@@ -38,7 +38,7 @@ public class QueenBehavior : Chessman
             i--;
             if (i < 0)
                 break;
-            c = ChessBoardController.Instace.Chessmans[i, currentY];
+            c = ChessBoardController.Instance.Chessmans[i, currentY];
             if (c == null)
                 r[i, currentY] = true;
             else
@@ -58,7 +58,7 @@ public class QueenBehavior : Chessman
             i++;
             if (i > 7)
                 break;
-            c = ChessBoardController.Instace.Chessmans[currentX, i];
+            c = ChessBoardController.Instance.Chessmans[currentX, i];
             if (c == null)
                 r[currentX, i] = true;
             else
@@ -78,7 +78,7 @@ public class QueenBehavior : Chessman
             i--;
             if (i < 0)
                 break;
-            c = ChessBoardController.Instace.Chessmans[currentX, i];
+            c = ChessBoardController.Instance.Chessmans[currentX, i];
             if (c == null)
                 r[currentX, i] = true;
             else
@@ -93,7 +93,7 @@ public class QueenBehavior : Chessman
         //up left
         for (i = currentX - 1, j = currentY + 1; i >= 0 && j < 8; i--, j++)
         {
-            c = ChessBoardController.Instace.Chessmans[i, j];
+            c = ChessBoardController.Instance.Chessmans[i, j];
             if (c == null)
                 r[i, j] = true;
             else
@@ -109,7 +109,7 @@ public class QueenBehavior : Chessman
         //up right
         for (i = currentX + 1, j = currentY + 1; i < 8 && j < 8; i++, j++)
         {
-            c = ChessBoardController.Instace.Chessmans[i, j];
+            c = ChessBoardController.Instance.Chessmans[i, j];
             if (c == null)
                 r[i, j] = true;
             else
@@ -123,7 +123,7 @@ public class QueenBehavior : Chessman
         //down left
         for (i = currentX - 1, j = currentY - 1; i >= 0 && j >= 0; i--, j--)
         {
-            c = ChessBoardController.Instace.Chessmans[i, j];
+            c = ChessBoardController.Instance.Chessmans[i, j];
             if (c == null)
                 r[i, j] = true;
             else
@@ -137,7 +137,7 @@ public class QueenBehavior : Chessman
         //down right
         for (i = currentX + 1, j = currentY - 1; i < 8 && j >= 0; i++, j--)
         {
-            c = ChessBoardController.Instace.Chessmans[i, j];
+            c = ChessBoardController.Instance.Chessmans[i, j];
             if (c == null)
                 r[i, j] = true;
             else
