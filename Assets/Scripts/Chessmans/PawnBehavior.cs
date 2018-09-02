@@ -15,7 +15,7 @@ public class PawnBehavior : Chessman {
             // move diagonally  left
             if(currentX != 0 && currentY != 7)
             {
-                aux = ChessBoardController.Instace.Chessmans[currentX-1, currentY+1];
+                aux = ChessBoardController.Instance.Chessmans[currentX-1, currentY+1];
                 if(aux != null && !aux.isWhite)
                     r[currentX-1, currentY+1] =  true;
             }
@@ -23,7 +23,7 @@ public class PawnBehavior : Chessman {
             // move diagonally  right
             if(currentX != 7 && currentY != 7)
             {
-                aux = ChessBoardController.Instace.Chessmans[currentX+1, currentY+1];
+                aux = ChessBoardController.Instance.Chessmans[currentX+1, currentY+1];
                 if(aux != null && !aux.isWhite)
                     r[currentX+1, currentY+1] =  true;
             }
@@ -31,7 +31,7 @@ public class PawnBehavior : Chessman {
             // move foward
             if(currentY != 7)
             {
-                aux = ChessBoardController.Instace.Chessmans[currentX, currentY+1];
+                aux = ChessBoardController.Instance.Chessmans[currentX, currentY+1];
                 if(aux == null)
                     r[currentX, currentY+1] =  true;
             }
@@ -39,8 +39,8 @@ public class PawnBehavior : Chessman {
             // move special 
             if(currentY == 1)
             {
-                aux = ChessBoardController.Instace.Chessmans[currentX, currentY+1];
-                aux2 = ChessBoardController.Instace.Chessmans[currentX, currentY+2];
+                aux = ChessBoardController.Instance.Chessmans[currentX, currentY+1];
+                aux2 = ChessBoardController.Instance.Chessmans[currentX, currentY+2];
 
                 if(aux == null && aux2 == null)
                     r[currentX, currentY+2] =  true;
@@ -51,7 +51,7 @@ public class PawnBehavior : Chessman {
             // move diagonally  left
             if(currentX != 0 && currentY != 0)
             {
-                aux = ChessBoardController.Instace.Chessmans[currentX-1, currentY-1];
+                aux = ChessBoardController.Instance.Chessmans[currentX-1, currentY-1];
                 if(aux != null && isWhite != aux.isWhite)
                     r[currentX-1, currentY-1] =  true;
             }
@@ -59,7 +59,7 @@ public class PawnBehavior : Chessman {
             // move diagonally  right
             if(currentX != 7 && currentY != 0)
             {
-                aux = ChessBoardController.Instace.Chessmans[currentX+1, currentY-1];
+                aux = ChessBoardController.Instance.Chessmans[currentX+1, currentY-1];
                 if(aux != null && isWhite != aux.isWhite)
                     r[currentX+1, currentY-1] =  true;
             }
@@ -67,7 +67,7 @@ public class PawnBehavior : Chessman {
             // move foward
             if(currentY != 0)
             {
-                aux = ChessBoardController.Instace.Chessmans[currentX, currentY-1];
+                aux = ChessBoardController.Instance.Chessmans[currentX, currentY-1];
                 if(aux == null)
                     r[currentX, currentY-1] =  true;
             }
@@ -75,8 +75,8 @@ public class PawnBehavior : Chessman {
             // move special 
             if(currentY == 6)
             {
-                aux = ChessBoardController.Instace.Chessmans[currentX, currentY-1];
-                aux2 = ChessBoardController.Instace.Chessmans[currentX, currentY-2];
+                aux = ChessBoardController.Instance.Chessmans[currentX, currentY-1];
+                aux2 = ChessBoardController.Instance.Chessmans[currentX, currentY-2];
 
                 if(aux == null && aux2 == null)
                     r[currentX, currentY-2] =  true;

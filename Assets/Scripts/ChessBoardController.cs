@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChessBoardController : MonoBehaviour {
 	
-	public static ChessBoardController Instace{get;set;}
+	public static ChessBoardController Instance{get;set;}
 	private bool[,] allowedMoves{set;get;}
+
+	
 
 	public Chessman[,] Chessmans{get;set;} 
 	private Chessman selectedChessman;
@@ -19,15 +22,28 @@ public class ChessBoardController : MonoBehaviour {
 	public List<GameObject> chessman;
 	private List<GameObject> activeChessman;
 
-	private Quaternion orientation  = Quaternion.Euler(-90,180,0);
+	private Quaternion orientation  = Quaternion.Euler(-90,180,90);
 
 	public bool isWhiteTurn  = true;
 
+
+	private ChessAI ia; 
 	// Use this for initialization
 	void Start () 
 	{
-		Instace = this;
+		
+		//Return the current Active Scene in order to get the current Scene's name
+        Scene scene = SceneManager.GetActiveScene();
+
+        //Check if the current Active Scene's name is your first Scene
+        if (scene.name == "StoneScene")
+			orientation = Quaternion.Euler(0,0,0);
+
+		Instance = this;
 		SpawAllPieces();
+
+		ia = new ChessAI();
+
 	}
 	
 	// Update is called once per frame
@@ -35,24 +51,35 @@ public class ChessBoardController : MonoBehaviour {
 	{
 		DrawBoard();
 		UpdateSelection();
-		#if UNITY_EDITOR
-			if(Input.GetMouseButtonDown(0))
-		#else
-			if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-		#endif
+		if(isWhiteTurn)
 		{
-			if(selectedChessman == null)
+
+			#if UNITY_EDITOR || UNITY_STANDALONE	
+				if(Input.GetMouseButtonDown(0))
+			#else
+				if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+			#endif
 			{
-				//select the piece
-				Debug.Log("try select a chessman");
-				SelectChessman(selectionX, selectionY);
-			}
-			else{
-				//try move the piece
-				Debug.Log("try move a chessman");
-				MoveChessman(selectionX, selectionY);
+				if(selectedChessman == null)
+				{
+					//select the piece
+					Debug.Log("try select a chessman");
+					SelectChessman(selectionX, selectionY);
+				}
+				else{
+					//try move the piece
+					Debug.Log("try move a chessman");
+					MoveChessman(selectionX, selectionY);
+				}
 			}
 		}
+		else
+		{
+			int[] move = ia.StartIA();
+			SelectChessman(move[0], move[1]);
+			MoveChessman(move[2], move[3]);
+		}
+
 	}
 
 	void DrawBoard()
@@ -91,16 +118,19 @@ public class ChessBoardController : MonoBehaviour {
 		if(!Camera.main)
 			return;
 		
+		if(!isWhiteTurn)
+			return;
+
 		RaycastHit hit;
 
 		
-		#if UNITY_EDITOR
-			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000.0f, LayerMask.GetMask("chessboard")))
+		#if UNITY_EDITOR || UNITY_STANDALONE
+			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit,100.0f, LayerMask.GetMask("chessboard")))
 		#else
 			if(!(Input.touchCount > 0))
 				return;
 
-			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.GetTouch(0).position), out hit, 10000.0f, LayerMask.GetMask("chessboard")))
+			if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.GetTouch(0).position), out hit, 10000000.0f, LayerMask.GetMask("chessboard")))
 		#endif
 		{
 			selectionX = (int) hit.point.x;
@@ -171,34 +201,34 @@ public class ChessBoardController : MonoBehaviour {
 		Chessmans =  new Chessman[8,8];
 		//white pieces
 		
-		//king
-		SpawnPiece(0, 3,0);
-		//Queen
-		SpawnPiece(1, 4,0);
-		//bishops
-		SpawnPiece(2, 3,3);
-		SpawnPiece(2, 5,0);
-		//kights
+		// // //king
+		SpawnPiece(0, 4,0);
+		// // //Queen
+		SpawnPiece(1, 3,0);
+		// // //bishops
+		// SpawnPiece(2, 2,0);
+		// SpawnPiece(2, 5,0);
+		// // //kights
 		SpawnPiece(3, 1,0);
 		SpawnPiece(3, 6,0);
-		//Rook
+		// //Rook
 		SpawnPiece(4, 0,0);
 		SpawnPiece(4, 7,0);
 		for (int i = 0; i < 8; i++)
 			SpawnPiece(5, i,1);
-		
-		//Black
-		//king
-		SpawnPiece(6, 4,7);
-		//Queen
-		SpawnPiece(7, 3,7);
-		//bishps
-		SpawnPiece(8, 2,7);
-		SpawnPiece(8, 5,7);
-		//kights
+
+		// //Black
+		// // //king
+		SpawnPiece(6, 3,7);
+		// // //Queen
+		SpawnPiece(7, 4,7);
+		// // //bishops
+		// SpawnPiece(8, 2,7);
+		// SpawnPiece(8, 5,7);
+		// // //kights
 		SpawnPiece(9, 1,7);
 		SpawnPiece(9, 6,7);
-		//Rook
+		// //Rook
 		SpawnPiece(10, 0,7);
 		SpawnPiece(10, 7,7);
 		for (int i = 0; i < 8; i++)

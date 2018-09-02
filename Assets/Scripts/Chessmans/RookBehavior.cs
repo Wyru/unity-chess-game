@@ -13,10 +13,10 @@ public class RookBehavior : Chessman {
         //right
         while (true)
         {
-            i++;
+            i= i + 1;
             if(i > 7)
                 break;
-            c = ChessBoardController.Instace.Chessmans[i,currentY];
+            c = ChessBoardController.Instance.Chessmans[i,currentY];
             if(c == null)
                 r[i, currentY] = true;
             else{
@@ -34,7 +34,7 @@ public class RookBehavior : Chessman {
             i--;
             if(i < 0)
                 break;
-            c = ChessBoardController.Instace.Chessmans[i,currentY];
+            c = ChessBoardController.Instance.Chessmans[i,currentY];
             if(c == null)
                 r[i, currentY] = true;
             else{
@@ -53,7 +53,7 @@ public class RookBehavior : Chessman {
             i++;
             if(i > 7)
                 break;
-            c = ChessBoardController.Instace.Chessmans[currentX,i];
+            c = ChessBoardController.Instance.Chessmans[currentX,i];
             if(c == null)
                 r[currentX, i] = true;
             else{
@@ -72,7 +72,7 @@ public class RookBehavior : Chessman {
             i--;
             if(i < 0)
                 break;
-            c = ChessBoardController.Instace.Chessmans[currentX,i];
+            c = ChessBoardController.Instance.Chessmans[currentX,i];
             if(c == null)
                 r[currentX, i] = true;
             else{

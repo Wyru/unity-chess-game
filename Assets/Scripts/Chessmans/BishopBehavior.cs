@@ -13,7 +13,7 @@ public class BishopBehavior : Chessman {
         //up left
         for (i = currentX-1, j = currentY+1; i >= 0 && j < 8; i--, j++)
         {
-            c = ChessBoardController.Instace.Chessmans[i, j];
+            c = ChessBoardController.Instance.Chessmans[i, j];
             if(c == null)
                 r[i,j] = true;
             else
@@ -29,7 +29,7 @@ public class BishopBehavior : Chessman {
         //up right
         for (i = currentX+1, j = currentY+1; i < 8 && j < 8; i++, j++)
         {
-            c = ChessBoardController.Instace.Chessmans[i, j];
+            c = ChessBoardController.Instance.Chessmans[i, j];
             if(c == null)
                 r[i,j] = true;
             else
@@ -43,7 +43,7 @@ public class BishopBehavior : Chessman {
         //down left
         for (i = currentX-1, j = currentY-1; i >=0 && j >= 0; i--, j--)
         {
-            c = ChessBoardController.Instace.Chessmans[i, j];
+            c = ChessBoardController.Instance.Chessmans[i, j];
             if(c == null)
                 r[i,j] = true;
             else
@@ -57,7 +57,7 @@ public class BishopBehavior : Chessman {
         //down right
         for (i = currentX+1, j = currentY-1; i < 8 && j >= 0; i++, j--)
         {
-            c = ChessBoardController.Instace.Chessmans[i, j];
+            c = ChessBoardController.Instance.Chessmans[i, j];
             if(c == null)
                 r[i,j] = true;
             else
