@@ -5,9 +5,9 @@ using UnityEngine;
 public class ChessAI  {
 
 
-    public int max_deep = 2;
+    public int max_deep = 3;
 
-    int qtd_movimentos = 0;
+    public int qtd_movimentos = 0;
 
     private enum ChessmansEnum
     {
@@ -86,7 +86,6 @@ public class ChessAI  {
         //Para cada peça os possíveis movimentos
         for (int x = 0; x < 8; x++)
         {
-            qtd_movimentos++;
             for (int y = 0; y < 8; y++)
             {
                 //pega os possíveis movimentos
@@ -99,8 +98,10 @@ public class ChessAI  {
             }
         }
         deep++;
+        Shuffle<int[]>(moves);
         foreach (int[] move in moves)
         {
+            qtd_movimentos++;
             
             move[4] = MinMax(GenerateBoardForMove((int[,])board.Clone(),move[0],move[1],move[2],move[3]), deep,!iaTurn)[4];
             if(iaTurn)
@@ -408,7 +409,7 @@ public class ChessAI  {
         // Top side
         i = x - 1;
         j = y + 1;
-        if (y != 7)
+        if (y < 7)
         {
             for(int k = 0; k < 3; k++)
             {
@@ -428,7 +429,7 @@ public class ChessAI  {
         //down side
         i = x - 1;
         j = y - 1;
-        if (y != 0)
+        if (y > 0)
         {
             for (int k = 0; k < 3; k++)
             {
@@ -445,7 +446,7 @@ public class ChessAI  {
         }
 
         //middle left
-        if (x != 0)
+        if (x > 0)
         {
             c = board[x-1,y];
             if (c == -1)
@@ -455,13 +456,149 @@ public class ChessAI  {
         }
         
         //middle Right
-        if (x != 7)
+        if (x < 7)
         {
             c = board[x-1,y];
             if (c == -1)
                 moves.Add(new int[]{x, y, x+1, y, 0});
             else if(board[x, y] < 6 && board[x+1,y] >= 6 || board[x, y] >= 6 && board[x+1, y] < 6)
                 moves.Add(new int[]{x, y, x+1, y, 0});
+        }
+    }
+
+    private void QueenMoves(int [,] board, int x, int y,  List<int[]> moves)
+    {
+        int i, j, c;
+
+        //up left
+        for (i = x-1, j = y+1; i >= 0 && j < 8; i--, j++)
+        {
+            c = board[x,y];
+            if(c == -1)
+                moves.Add(new int[]{x, y, i, j, 0});
+            else
+            {
+                if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                    moves.Add(new int[]{x, y, i, j, 0});
+                break;
+            }
+            
+        } 
+
+
+        //up right
+        for (i = x+1, j = y+1; i < 8 && j < 8; i++, j++)
+        {
+            c = board[x,y];
+            if(c == -1)
+                moves.Add(new int[]{x, y, i, j, 0});
+            else
+            {
+                if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                    moves.Add(new int[]{x, y, i, j, 0});
+                break;
+            }
+        }
+
+        //down left
+        for (i = x-1, j = y-1; i >=0 && j >= 0; i--, j--)
+        {
+            c = board[x,y];
+            if(c == -1)
+                moves.Add(new int[]{x, y, i, j, 0});
+            else
+            {
+                if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                    moves.Add(new int[]{x, y, i, j, 0});
+                break;
+            }
+        }  
+
+        //down right
+        for (i = x+1, j = y-1; i < 8 && j >= 0; i++, j--)
+        {
+            c = board[x,y];
+            if(c == -1)
+                moves.Add(new int[]{x, y, i, j, 0});
+            else
+            {
+                if(board[x, y] < 6 && board[i,j] >= 6 || board[x, y] >= 6 && board[i, j] < 6)
+                    moves.Add(new int[]{x, y, i, j, 0});
+                break;
+            }
+        }  
+
+        //right
+        i =  x;
+        int aux;
+
+        while (true)
+        {
+            i = i + 1;
+            if(i > 7)
+                break;
+            aux = board[i,y];
+            if(aux == -1)
+                moves.Add(new int[]{x, y, i, y, 0});
+            else{
+                if(board[x, y] < 6 && board[i,x] >= 6 || board[x, y] >= 6 && board[i,x] < 6)
+                    moves.Add(new int[]{x, y, i, y, 0});
+                break;
+            }
+        }
+
+        //left
+        i =  x;
+
+        while (true)
+        {
+            i--;
+            if(i < 0)
+                break;
+            aux = board[i,y];
+            if(aux == -1)
+                moves.Add(new int[]{x, y, i, y, 0});
+            else{
+                if(board[x, y] < 6 && board[i,x] >= 6 || board[x, y] >= 6 && board[i,x] < 6)
+                    moves.Add(new int[]{x, y, i, y, 0});
+                break;
+            }
+        }
+
+        //top
+        i =  y;
+
+        while (true)
+        {
+            i++;
+            if(i > 7)
+                break;
+            aux = board[x,i];
+            if(aux == -1)
+                moves.Add(new int[]{x, y, x, i, 0});
+            else{
+                if(board[x, y] < 6 && board[i,x] >= 6 || board[x, y] >= 6 && board[i,x] < 6)
+                    moves.Add(new int[]{x, y, x, i, 0});
+                break;
+            }
+        }
+
+        //bootom
+        i =  y;
+
+        while (true)
+        {
+            i--;
+            if(i < 0)
+                break;
+            aux = board[x,i];
+            if(aux == -1)
+                moves.Add(new int[]{x, y, x, i, 0});
+            else{
+                if(board[x, y] < 6 && board[i,x] >= 6 || board[x, y] >= 6 && board[i,x] < 6)
+                    moves.Add(new int[]{x, y, x, i, 0});
+                break;
+            }
         }
     }
 
@@ -472,6 +609,17 @@ public class ChessAI  {
             for (int y = 0; y < 8; y++)
                 score+=chessmans_points[board[x,y]+1];
         return score;
+    }
+
+    public static void Shuffle<T>(List<T> ts) {
+        var count = ts.Count;
+        var last = count - 1;
+        for (var i = 0; i < last; ++i) {
+            var r = UnityEngine.Random.Range(i, count);
+            var tmp = ts[i];
+            ts[i] = ts[r];
+            ts[r] = tmp;
+        }
     }
 
 }

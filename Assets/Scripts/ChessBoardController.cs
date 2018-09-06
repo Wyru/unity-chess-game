@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class ChessBoardController : MonoBehaviour {
 	
 	public static ChessBoardController Instance{get;set;}
 	private bool[,] allowedMoves{set;get;}
-
-	
 
 	public Chessman[,] Chessmans{get;set;} 
 	private Chessman selectedChessman;
@@ -26,8 +26,20 @@ public class ChessBoardController : MonoBehaviour {
 
 	public bool isWhiteTurn  = true;
 
-
+	public bool gameOver = false;
 	private ChessAI ia; 
+
+
+	public TextMeshProUGUI gameOverText;
+	public GameObject gameOverMessage;
+
+	public bool coolDown = true;
+
+	public AudioClip moveSound;
+	public AudioClip killSound;
+	public AudioClip VictorySound;
+	public AudioClip DefeatSound;
+	public AudioSource audioSource;
 	// Use this for initialization
 	void Start () 
 	{
@@ -42,6 +54,7 @@ public class ChessBoardController : MonoBehaviour {
 		Instance = this;
 		SpawAllPieces();
 
+		audioSource = this.GetComponent<AudioSource>();
 		ia = new ChessAI();
 
 	}
@@ -49,6 +62,8 @@ public class ChessBoardController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if(gameOver) return;
+
 		DrawBoard();
 		UpdateSelection();
 		if(isWhiteTurn)
@@ -70,12 +85,16 @@ public class ChessBoardController : MonoBehaviour {
 					//try move the piece
 					Debug.Log("try move a chessman");
 					MoveChessman(selectionX, selectionY);
+					StartCoroutine("CoolDownNextMove",.5f);
 				}
 			}
 		}
 		else
 		{
+			if(coolDown)
+				return;
 			int[] move = ia.StartIA();
+			Debug.Log("Quantidade de movimentos analisados: "+ia.qtd_movimentos);
 			SelectChessman(move[0], move[1]);
 			MoveChessman(move[2], move[3]);
 		}
@@ -167,12 +186,18 @@ public class ChessBoardController : MonoBehaviour {
 
 				if(c.GetType() == typeof(KingBehavior))
 				{
-					//End the game end
+					EndGame(c);
 					return;
 				}
 
 				activeChessman.Remove(c.gameObject);
 				Destroy(c.gameObject);
+				audioSource.clip = killSound;
+				audioSource.Play();
+			}
+			else{
+				audioSource.clip = moveSound;
+				audioSource.Play();
 			}
 			Chessmans[selectedChessman.currentX,selectedChessman.currentY] = null;
 			selectedChessman.transform.position = GetTileCenter(x,y);
@@ -201,13 +226,13 @@ public class ChessBoardController : MonoBehaviour {
 		Chessmans =  new Chessman[8,8];
 		//white pieces
 		
-		// // //king
+		//king
 		SpawnPiece(0, 4,0);
-		// // //Queen
+		//Queen
 		SpawnPiece(1, 3,0);
-		// // //bishops
-		// SpawnPiece(2, 2,0);
-		// SpawnPiece(2, 5,0);
+		//bishops
+		SpawnPiece(2, 2,0);
+		SpawnPiece(2, 5,0);
 		// // //kights
 		SpawnPiece(3, 1,0);
 		SpawnPiece(3, 6,0);
@@ -217,18 +242,18 @@ public class ChessBoardController : MonoBehaviour {
 		for (int i = 0; i < 8; i++)
 			SpawnPiece(5, i,1);
 
-		// //Black
-		// // //king
+		//Black
+		//king
 		SpawnPiece(6, 3,7);
-		// // //Queen
+		//Queen
 		SpawnPiece(7, 4,7);
-		// // //bishops
-		// SpawnPiece(8, 2,7);
-		// SpawnPiece(8, 5,7);
-		// // //kights
+		//bishops
+		SpawnPiece(8, 2,7);
+		SpawnPiece(8, 5,7);
+		//kights
 		SpawnPiece(9, 1,7);
 		SpawnPiece(9, 6,7);
-		// //Rook
+		//Rook
 		SpawnPiece(10, 0,7);
 		SpawnPiece(10, 7,7);
 		for (int i = 0; i < 8; i++)
@@ -257,4 +282,30 @@ public class ChessBoardController : MonoBehaviour {
 		}
 		Debug.Log(text);
 	}
+
+	private void EndGame(Chessman king)
+	{
+		if(king.isWhite){
+			gameOverText.text = "Você perdeu :(";
+			audioSource.clip = DefeatSound;
+		}
+		else{
+			audioSource.clip = VictorySound;
+			gameOverText.text = "Você venceu :)";
+		}
+		
+		audioSource.Play();
+
+		this.gameOver = true;
+		this.gameOverMessage.SetActive(true);
+	}
+
+
+
+	private IEnumerator CoolDownNextMove(float waitTime)
+    {
+		coolDown = true;
+		yield return new WaitForSeconds(waitTime);
+		coolDown = false;
+    }
 }
