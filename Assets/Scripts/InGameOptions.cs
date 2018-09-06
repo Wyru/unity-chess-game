@@ -13,6 +13,6 @@ public class InGameOptions : MonoBehaviour {
 
 	public void loadMenu()
 	{
-		SceneManager.LoadScene(1);
+		SceneManager.LoadScene(0);
 	}
 }

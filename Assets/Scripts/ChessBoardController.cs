@@ -32,6 +32,14 @@ public class ChessBoardController : MonoBehaviour {
 
 	public TextMeshProUGUI gameOverText;
 	public GameObject gameOverMessage;
+
+	public bool coolDown = true;
+
+	public AudioClip moveSound;
+	public AudioClip killSound;
+	public AudioClip VictorySound;
+	public AudioClip DefeatSound;
+	public AudioSource audioSource;
 	// Use this for initialization
 	void Start () 
 	{
@@ -46,6 +54,7 @@ public class ChessBoardController : MonoBehaviour {
 		Instance = this;
 		SpawAllPieces();
 
+		audioSource = this.GetComponent<AudioSource>();
 		ia = new ChessAI();
 
 	}
@@ -76,11 +85,14 @@ public class ChessBoardController : MonoBehaviour {
 					//try move the piece
 					Debug.Log("try move a chessman");
 					MoveChessman(selectionX, selectionY);
+					StartCoroutine("CoolDownNextMove",.5f);
 				}
 			}
 		}
 		else
 		{
+			if(coolDown)
+				return;
 			int[] move = ia.StartIA();
 			Debug.Log("Quantidade de movimentos analisados: "+ia.qtd_movimentos);
 			SelectChessman(move[0], move[1]);
@@ -180,6 +192,12 @@ public class ChessBoardController : MonoBehaviour {
 
 				activeChessman.Remove(c.gameObject);
 				Destroy(c.gameObject);
+				audioSource.clip = killSound;
+				audioSource.Play();
+			}
+			else{
+				audioSource.clip = moveSound;
+				audioSource.Play();
 			}
 			Chessmans[selectedChessman.currentX,selectedChessman.currentY] = null;
 			selectedChessman.transform.position = GetTileCenter(x,y);
@@ -267,13 +285,27 @@ public class ChessBoardController : MonoBehaviour {
 
 	private void EndGame(Chessman king)
 	{
-		if(king.isWhite)
+		if(king.isWhite){
 			gameOverText.text = "Você perdeu :(";
-		else
+			audioSource.clip = DefeatSound;
+		}
+		else{
+			audioSource.clip = VictorySound;
 			gameOverText.text = "Você venceu :)";
+		}
+		
+		audioSource.Play();
 
 		this.gameOver = true;
 		this.gameOverMessage.SetActive(true);
 	}
 
+
+
+	private IEnumerator CoolDownNextMove(float waitTime)
+    {
+		coolDown = true;
+		yield return new WaitForSeconds(waitTime);
+		coolDown = false;
+    }
 }

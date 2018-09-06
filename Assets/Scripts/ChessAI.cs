@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChessAI  {
 
 
-    public int max_deep = 1;
+    public int max_deep = 3;
 
     public int qtd_movimentos = 0;
 
@@ -98,6 +98,7 @@ public class ChessAI  {
             }
         }
         deep++;
+        Shuffle<int[]>(moves);
         foreach (int[] move in moves)
         {
             qtd_movimentos++;
@@ -408,7 +409,7 @@ public class ChessAI  {
         // Top side
         i = x - 1;
         j = y + 1;
-        if (y != 7)
+        if (y < 7)
         {
             for(int k = 0; k < 3; k++)
             {
@@ -428,7 +429,7 @@ public class ChessAI  {
         //down side
         i = x - 1;
         j = y - 1;
-        if (y != 0)
+        if (y > 0)
         {
             for (int k = 0; k < 3; k++)
             {
@@ -445,7 +446,7 @@ public class ChessAI  {
         }
 
         //middle left
-        if (x != 0)
+        if (x > 0)
         {
             c = board[x-1,y];
             if (c == -1)
@@ -455,7 +456,7 @@ public class ChessAI  {
         }
         
         //middle Right
-        if (x != 7)
+        if (x < 7)
         {
             c = board[x-1,y];
             if (c == -1)
@@ -600,6 +601,7 @@ public class ChessAI  {
             }
         }
     }
+
     private int BoardToScore(int[,] board)
     {
         int score = 0;
@@ -607,6 +609,17 @@ public class ChessAI  {
             for (int y = 0; y < 8; y++)
                 score+=chessmans_points[board[x,y]+1];
         return score;
+    }
+
+    public static void Shuffle<T>(List<T> ts) {
+        var count = ts.Count;
+        var last = count - 1;
+        for (var i = 0; i < last; ++i) {
+            var r = UnityEngine.Random.Range(i, count);
+            var tmp = ts[i];
+            ts[i] = ts[r];
+            ts[r] = tmp;
+        }
     }
 
 }
