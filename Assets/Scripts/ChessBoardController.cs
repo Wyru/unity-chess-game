@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-
+using Game;
 public class ChessBoardController : MonoBehaviour {
 	
 	public static ChessBoardController Instance{get;set;}
