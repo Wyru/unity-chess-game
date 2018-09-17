@@ -5,13 +5,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using Game;
+using AI;
 public class ChessBoardController : MonoBehaviour {
 	
+	public int deep;
+
+
 	public static ChessBoardController Instance{get;set;}
 	private bool[,] allowedMoves{set;get;}
 
-	public Chessman[,] Chessmans{get;set;} 
-	private Chessman selectedChessman;
+	public Game.Chessman[,] Chessmans{get;set;} 
+	private Game.Chessman selectedChessman;
 
 	private const float TILE_SIZE = 1.0F;
 	private const float TILE_OFFSET = .5f;
@@ -27,8 +31,8 @@ public class ChessBoardController : MonoBehaviour {
 	public bool isWhiteTurn  = true;
 
 	public bool gameOver = false;
-	private ChessAI ia; 
-
+	// private ChessAI ia; 
+	private Elloin elloin;
 
 	public TextMeshProUGUI gameOverText;
 	public GameObject gameOverMessage;
@@ -55,8 +59,8 @@ public class ChessBoardController : MonoBehaviour {
 		SpawAllPieces();
 
 		audioSource = this.GetComponent<AudioSource>();
-		ia = new ChessAI();
-
+		// ia = new ChessAI();
+		elloin = new Elloin(false, deep);
 	}
 	
 	// Update is called once per frame
@@ -93,10 +97,14 @@ public class ChessBoardController : MonoBehaviour {
 		{
 			if(coolDown)
 				return;
-			int[] move = ia.StartIA();
-			Debug.Log("Quantidade de movimentos analisados: "+ia.qtd_movimentos);
-			SelectChessman(move[0], move[1]);
-			MoveChessman(move[2], move[3]);
+			// int[] move = ia.StartIA();
+			// Debug.Log("Quantidade de movimentos analisados: "+ia.qtd_movimentos);
+			// SelectChessman(move[0], move[1]);
+			// MoveChessman(move[2], move[3]);
+
+			Move move = elloin.chooseBestMove();
+			SelectChessman(move.origin.x, move.origin.y);
+			MoveChessman(move.destiny.x, move.destiny.y);
 		}
 
 	}
@@ -179,7 +187,7 @@ public class ChessBoardController : MonoBehaviour {
 	{
 		if(allowedMoves[x,y])
 		{
-			Chessman c = Chessmans[x,y];
+			Game.Chessman c = Chessmans[x,y];
 			if(c!= null && c.isWhite != isWhiteTurn)
 			{
 				//capture the piece
@@ -214,7 +222,7 @@ public class ChessBoardController : MonoBehaviour {
 	private void SpawnPiece(int index, int x, int y)
 	{
 		GameObject go = Instantiate(chessman[index],GetTileCenter(x,y),orientation) as GameObject;
-		Chessmans[x,y] = go.GetComponent<Chessman>();
+		Chessmans[x,y] = go.GetComponent<Game.Chessman>();
 		Chessmans[x,y].setPostion(x,y);
 		go.transform.SetParent(this.transform);
 		activeChessman.Add(go);
@@ -223,7 +231,7 @@ public class ChessBoardController : MonoBehaviour {
 	private void SpawAllPieces()
 	{
 		activeChessman =  new List<GameObject>();
-		Chessmans =  new Chessman[8,8];
+		Chessmans =  new Game.Chessman[8,8];
 		//white pieces
 		
 		//king
@@ -283,7 +291,7 @@ public class ChessBoardController : MonoBehaviour {
 		Debug.Log(text);
 	}
 
-	private void EndGame(Chessman king)
+	private void EndGame(Game.Chessman king)
 	{
 		if(king.isWhite){
 			gameOverText.text = "Você perdeu :(";

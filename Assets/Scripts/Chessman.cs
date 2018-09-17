@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using AI;
 namespace Game
 {
 	public abstract class Chessman : MonoBehaviour {

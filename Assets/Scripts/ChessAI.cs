@@ -414,7 +414,7 @@ public class ChessAI  {
         {
             for(int k = 0; k < 3; k++)
             {
-                if(i >= 0 || i < 8)
+                if(i >= 0 && i < 8)
                 {
                     c = board[i,j];
                     if (c == -1)
@@ -434,7 +434,7 @@ public class ChessAI  {
         {
             for (int k = 0; k < 3; k++)
             {
-                if (i >= 0 || i < 8)
+                if (i >= 0 && i < 8)
                 {
                     c = board[i,j];
                     if (c == -1)

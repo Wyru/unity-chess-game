@@ -1,4 +1,5 @@
-using Unity.Collections;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace AI{
     public class Elloin
@@ -6,6 +7,8 @@ namespace AI{
         Board board;
         bool isWhite;
         int maxDeep;
+
+        List<float> scores;
 
         public Elloin(bool isWhite, int deep)
         {
@@ -15,8 +18,9 @@ namespace AI{
 
         public Move chooseBestMove()
         {
-            board =  new Board(this.isWhite);
-            Move bestMove = minMax(maxDeep,-99999, 99999,true);
+            scores  = new List<float>();
+            board = new Board(this.isWhite);
+            return minMax(maxDeep,-99999, 99999,true);
         }
 
 
@@ -24,9 +28,10 @@ namespace AI{
         {
             Move bestMove = new Move();
 
-            if(deep == 0)
+            if(deep <= 0)
             {
                 bestMove.score = board.getScore();
+                scores.Add(bestMove.score);
                 return bestMove;
             }
             if(maximizingPlayer)
@@ -37,7 +42,7 @@ namespace AI{
                 {
                     board.doMove(move);
                     move.score = minMax(deep-1,alpha, beta, false).score;
-                    board.undoMove(move);
+                    board.undoMove();
 
                     if(bestMove.score < move.score)
                         bestMove = move;
@@ -58,7 +63,7 @@ namespace AI{
                 {
                     board.doMove(move);
                     move.score = minMax(deep-1,alpha, beta, true).score;
-                    board.undoMove(move);
+                    board.undoMove();
                     if(bestMove.score > move.score){
                         bestMove = move;
                     }

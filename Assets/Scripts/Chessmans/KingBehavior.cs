@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game;
 
 public class KingBehavior : Chessman
 {
@@ -18,7 +19,7 @@ public class KingBehavior : Chessman
         {
             for(int k = 0; k < 3; k++)
             {
-                if(i >= 0 || i < 8)
+                if(i >= 0 && i < 8)
                 {
                     c = ChessBoardController.Instance.Chessmans[i, j];
                     if (c == null)
@@ -37,7 +38,7 @@ public class KingBehavior : Chessman
         {
             for (int k = 0; k < 3; k++)
             {
-                if (i >= 0 || i < 8)
+                if (i >= 0 && i < 8)
                 {
                     c = ChessBoardController.Instance.Chessmans[i, j];
                     if (c == null)

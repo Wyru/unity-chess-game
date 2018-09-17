@@ -212,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b198158ba330b4e85c79c2501a6c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deep: 2
   chessman:
   - {fileID: 1233361812545480, guid: 279db6381e10dfa4ea1b4074d833bfb8, type: 2}
   - {fileID: 1633224609000294, guid: 03825e973280c7e4788ee0d1339abcd0, type: 2}
@@ -1394,7 +1395,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.64001465, y: 67.9}
+  m_AnchoredPosition: {x: 0.75, y: 67.9}
   m_SizeDelta: {x: -15.4, y: 220.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1644598415
