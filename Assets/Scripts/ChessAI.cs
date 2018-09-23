@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game;
 
 public class ChessAI  {
 
@@ -413,7 +414,7 @@ public class ChessAI  {
         {
             for(int k = 0; k < 3; k++)
             {
-                if(i >= 0 || i < 8)
+                if(i >= 0 && i < 8)
                 {
                     c = board[i,j];
                     if (c == -1)
@@ -433,7 +434,7 @@ public class ChessAI  {
         {
             for (int k = 0; k < 3; k++)
             {
-                if (i >= 0 || i < 8)
+                if (i >= 0 && i < 8)
                 {
                     c = board[i,j];
                     if (c == -1)
@@ -611,7 +612,8 @@ public class ChessAI  {
         return score;
     }
 
-    public static void Shuffle<T>(List<T> ts) {
+    public static void Shuffle<T>(List<T> ts) 
+    {
         var count = ts.Count;
         var last = count - 1;
         for (var i = 0; i < last; ++i) {
