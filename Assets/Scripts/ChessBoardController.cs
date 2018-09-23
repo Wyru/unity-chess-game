@@ -252,9 +252,9 @@ public class ChessBoardController : MonoBehaviour {
 
 		//Black
 		//king
-		SpawnPiece(6, 3,7);
+		SpawnPiece(6, 4,7);
 		//Queen
-		SpawnPiece(7, 4,7);
+		SpawnPiece(7, 3,7);
 		//bishops
 		SpawnPiece(8, 2,7);
 		SpawnPiece(8, 5,7);
